@@ -23,8 +23,8 @@ public class Main {
 			System.exit(0);
 		}
 		size = N*M;
-		dp = new int[(N + 1) * (M + 1)][(1 << (M+1)) - 1];
-		for (int i = 0; i < (N + 1) * (M + 1); i++) {
+		dp = new int[14 * 14][1 << 14];
+		for (int i = 0; i < 14 * 14; i++) {
 			Arrays.fill(dp[i], -1);
 		}
 		System.out.println(dfs(0, 0));
