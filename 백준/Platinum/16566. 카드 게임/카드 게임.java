@@ -1,30 +1,23 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.StringTokenizer;
 
 public class Main {
 	public static StringBuilder sb;
 	public static void main(String[] args) throws Exception{
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
 		sb = new StringBuilder();
-		st = new StringTokenizer(bf.readLine());
-		st.nextToken();
-		int M = Integer.parseInt(st.nextToken());
-		int K = Integer.parseInt(st.nextToken());
+		readInt();
+		int M = readInt();
+		int K = readInt();
 		int[] arr = new int[M + 1];
-		st = new StringTokenizer(bf.readLine());
+
 		for (int i = 1; i <= M; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
+			arr[i] = readInt();
 		}
 		Arrays.sort(arr);
 		SegTree seg = new SegTree(M);
 		seg.initmax(arr, 1, 1, M);		
-		
-		st = new StringTokenizer(bf.readLine());
+
 		for (int i = 0; i < K; i++) {
-			int a = Integer.parseInt(st.nextToken());
+			int a = readInt();
 			seg.update(1, 1, M, a);
 		}
 		System.out.println(sb.toString());
@@ -54,7 +47,6 @@ public class Main {
 			//바꾸는 위치값이 start~end 에 없으면 return
 			if(start == end) {
 				sb.append(tree[node]).append("\n");
-//				System.out.println(tree[node]);
 				tree[node] = 0;
 				return tree[node];
 				
@@ -68,5 +60,24 @@ public class Main {
 			return tree[node];
 		}
 
+	}
+	
+	public static int readInt() throws Exception {
+		int val = 0;
+		boolean flag = false;
+		do {
+			int c = System.in.read();
+			if (c == '-') {
+				flag = true;
+				continue;
+			}
+			if (c == 13)
+				continue;
+
+			if (c == 32 || c == 10)
+				break;
+			val = 10 * val + c - 48;
+		} while (true);
+		return flag ? -val : val;
 	}
 }
