@@ -25,7 +25,7 @@ public class Main {
 				q.pollLast();
 			}
 			q.addLast(new Pos(a , i));
-			while(!q.isEmpty() && q.peekFirst().count <= i - L) {
+			if(!q.isEmpty() && q.peekFirst().count <= i - L) {
 				q.pollFirst();
 			}
 			sb.append(q.peekFirst().num).append(" ");
