@@ -1,23 +1,22 @@
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
 public class Main {
 	public static ArrayList<Node>[] g;
-	public static Queue<Integer> q = new ArrayDeque<>();
-	public static int[] distance;
+	public static PriorityQueue<Node> q = new PriorityQueue<>();
+	public static long[] distance;
 	public static int end;
-	public static int size;
+	public static long size;
 
 	public static void main(String[] args) throws Exception {
 		int N = readInt();
 		int M = readInt();
 		int start = readInt();
 		end = readInt();
-		size = readInt();
+		size = readlong();
 		g = new ArrayList[N + 1];
-		distance = new int[N + 1];
+		distance = new long[N + 1];
 
 		for (int i = 0; i <= N; i++) {
 			g[i] = new ArrayList<>();
@@ -26,17 +25,18 @@ public class Main {
 		for (int i = 0; i < M; i++) {
 			int s = readInt();
 			int e = readInt();
-			int cost = readInt();
+			long cost = readlong();
 			g[s].add(new Node(e, cost));
 			g[e].add(new Node(s, cost));
 		}
 
-		int s = 0;
-		int e = 21;
-		int m = 0;
-		int temp = 0;
+		long s = 0;
+		long e = 21;
+		long m = 0;
+		long temp = 0;
 		while (s != e) {
-			Arrays.fill(distance, Integer.MAX_VALUE);
+			Arrays.fill(distance, Long.MAX_VALUE);
+			q.clear();
 			m = (s + e) >> 1;
 			temp = dijkstra(start, m);
 			if (temp <= size) {
@@ -52,22 +52,25 @@ public class Main {
 			System.out.println(e);
 	}
 
-	public static int dijkstra(int start, int maxcost) {
+	public static long dijkstra(int start, long maxcost) {
 		distance[start] = 0;
-		q.offer(start);
+		q.offer(new Node(start , 0));
 
 		while (!q.isEmpty()) {
-			int v = q.poll();
-			
+			Node node = q.poll();
+//			System.out.println(node.cost);
+			if(node.v == end)
+				return distance[end];
 			// 꺼낸노드에 연결된 그래프 탐색
-			for (int i = 0; i < g[v].size(); i++) {
-				Node nextNode = g[v].get(i);
+			for (int i = 0; i < g[node.v].size(); i++) {
+				Node nextNode = g[node.v].get(i);
 				
 				// 다음노드의 최단거리보다 현재노드거리 + 다음노드까지의 거리가 작다면
 				if (nextNode.cost <= maxcost) {
-					if (distance[nextNode.v] > distance[v] + nextNode.cost) {
-						distance[nextNode.v] = distance[v] + nextNode.cost;
-						q.offer(nextNode.v);
+					if (distance[nextNode.v] > node.cost + nextNode.cost) {
+						distance[nextNode.v] = node.cost + nextNode.cost;
+						if(distance[nextNode.v] <= size)
+							q.offer(new Node(nextNode.v , distance[nextNode.v]));
 					}
 				}
 			}
@@ -93,14 +96,44 @@ public class Main {
 		} while (true);
 		return flag ? -val : val;
 	}
+	
+	public static long readlong() throws Exception {
+		long val = 0;
+		boolean flag = false;
+		do {
+			long c = System.in.read();
+			if (c == '-') {
+				flag = true;
+				continue;
+			}
+			if (c == 13)
+				continue;
+
+			if (c == 32 || c == 10)
+				break;
+			val = 10 * val + c - 48;
+		} while (true);
+		return flag ? -val : val;
+	}
 }
 
-class Node {
+class Node implements Comparable<Node>{
 	int v;
-	int cost;
+	long cost;
 
-	public Node(int v, int cost) {
+	public Node(int v, long cost) {
 		this.v = v;
 		this.cost = cost;
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		if(this.cost < o.cost) {
+			return -1;
+		} else if(this.cost == o.cost) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 }
