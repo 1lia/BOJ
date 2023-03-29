@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
-import java.util.StringTokenizer;
 
 public class Main {
 	public static ArrayList<Node>[] g;
@@ -12,14 +9,11 @@ public class Main {
 	public static int end;
 
 	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		int start = Integer.parseInt(st.nextToken());
-		end = Integer.parseInt(st.nextToken());
-		int size = Integer.parseInt(st.nextToken());
+		int N = readInt();
+		int M = readInt();
+		int start = readInt();
+		end = readInt();
+		int size = readInt();
 		g = new ArrayList[N + 1];
 		distance = new int[N + 1];
 
@@ -28,10 +22,9 @@ public class Main {
 		}
 
 		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int e = Integer.parseInt(st.nextToken());
-			int cost = Integer.parseInt(st.nextToken());
+			int s = readInt();
+			int e = readInt();
+			int cost = readInt();
 			g[s].add(new Node(e, cost));
 			g[e].add(new Node(s, cost));
 		}
@@ -78,6 +71,25 @@ public class Main {
 			}
 		}
 		return distance[end];
+	}
+	
+	public static int readInt() throws Exception {
+		int val = 0;
+		boolean flag = false;
+		do {
+			int c = System.in.read();
+			if (c == '-') {
+				flag = true;
+				continue;
+			}
+			if (c == 13)
+				continue;
+
+			if (c == 32 || c == 10)
+				break;
+			val = 10 * val + c - 48;
+		} while (true);
+		return flag ? -val : val;
 	}
 }
 
