@@ -1,13 +1,12 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
 	public static void main(String[] args) throws Exception{
-		Queue<Node> q = new ArrayDeque<>();
+		PriorityQueue<Node> q = new PriorityQueue<>(); 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
@@ -39,6 +38,9 @@ public class Main {
 			
 			while(!q.isEmpty()) {
 				node = q.poll();
+				if(node.x == N-1 && node.y == N-1) {
+					break;
+				}
 				for (int i = 0; i < 4; i++) {
 					dx = node.x + dxy[0][i];
 					dy = node.y + dxy[1][i];
@@ -50,14 +52,14 @@ public class Main {
 					}
 				}
 			}
-			sb.append("Problem ").append(cnt++).append(": ").append(distance[N-1][N-1]).append('\n');
+			sb.append("Problem ").append(cnt++).append(": ").append(node.cost).append('\n');
 		}
 		System.out.println(sb.toString());
 		
 	}
 }
 
-class Node{
+class Node implements Comparable<Node>{
 	int x;
 	int y;
 	int cost;
@@ -65,5 +67,9 @@ class Node{
 		this.x = x;
 		this.y = y;
 		this.cost = cost;
+	}
+	@Override
+	public int compareTo(Node o) {
+		return this.cost - o.cost;
 	}
 }
