@@ -32,16 +32,20 @@ public class Main {
 				if(0 <= dx && dx < M && 0 <= dy && dy < N) {
 					if(visit[p.x][p.y] + map[dx][dy] < visit[dx][dy]) {
 						visit[dx][dy] =  visit[p.x][p.y] + map[dx][dy];
+						if(dx + 1 == M && dy + 1 == N) {
+							System.out.println(visit[dx][dy]);
+							return;
+						}
 						if(map[dx][dy] == 1) {
 							q.offer(new Pos(dx , dy));
 						} else {
-							q.offerLast(new Pos(dx , dy));
+							q.offerFirst(new Pos(dx , dy));
 						}
 					}
 				}
 			}
-		}	
-		System.out.println(visit[M-1][N-1]);
+		}
+		System.out.println(0);
 	}
 }
 
