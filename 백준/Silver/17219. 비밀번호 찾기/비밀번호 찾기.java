@@ -1,24 +1,89 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    	StringTokenizer st = new StringTokenizer(br.readLine());
     	StringBuilder sb = new StringBuilder();
-    	int N = Integer.parseInt(st.nextToken());
-    	int M = Integer.parseInt(st.nextToken());
+    	StringTokenizer st;
+    	Reader io = new Reader();
+    	int N = io.nextInt();
+    	int M = io.nextInt();
     	HashMap<String, String> map  = new HashMap<>();
     	for (int i = 0; i < N; i++) {
-    		st = new StringTokenizer(br.readLine());
+    		st = new StringTokenizer(io.readLine());
 			map.put(st.nextToken(), st.nextToken());
 		}
-    	
     	for (int i = 0; i < M; i++) {
-			sb.append(map.get(br.readLine())).append('\n');
+			sb.append(map.get(io.readLine().trim())).append('\n');
 		}
     	System.out.println(sb);
     }
+    static class Reader {
+		final private int BUFFER_SIZE = 1 << 16;
+		private DataInputStream din;
+		private byte[] buffer;
+		private int bufferPointer, bytesRead;
+
+		public Reader(){
+			din = new DataInputStream(System.in);
+			buffer = new byte[BUFFER_SIZE];
+			bufferPointer = bytesRead = 0;
+		}
+
+		public Reader(String file_name) throws IOException{
+			din = new DataInputStream(
+				new FileInputStream(file_name));
+			buffer = new byte[BUFFER_SIZE];
+			bufferPointer = bytesRead = 0;
+		}
+
+		public String readLine() throws IOException{
+			byte[] buf = new byte[64];
+			int cnt = 0, c;
+			while ((c = read()) != -1) {
+				if (c == '\n') {
+					if (cnt != 0) {
+						break;
+					}
+					else {
+						continue;
+					}
+				}
+				buf[cnt++] = (byte)c;
+			}
+			return new String(buf, 0, cnt);
+		}
+		public int nextInt() throws IOException{
+			int ret = 0;
+			byte c = read();
+			while (c <= ' ') {
+				c = read();
+			}
+			boolean neg = (c == '-');
+			if (neg)
+				c = read();
+			do {
+				ret = ret * 10 + c - '0';
+			} while ((c = read()) >= '0' && c <= '9');
+
+			if (neg)
+				return -ret;
+			return ret;
+		}
+
+		private void fillBuffer() throws IOException{
+			bytesRead = din.read(buffer, bufferPointer = 0,BUFFER_SIZE);
+			if (bytesRead == -1)
+				buffer[0] = -1;
+		}
+
+		private byte read() throws IOException {
+			if (bufferPointer == bytesRead)
+				fillBuffer();
+			return buffer[bufferPointer++];
+		}
+	}
 }
