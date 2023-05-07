@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
     	int N = readInt();
-    	SegTree seg = new SegTree(N+1);
+    	FenwickTree fenwick = new FenwickTree(N+1);
     	int[] arr = new int[N+1];
     	int sum = 0;
     	
@@ -11,24 +11,24 @@ public class Main {
     		arr[readInt()] = i;
 		}
     	for (int i = N; i > 0; i--) {
-			seg.update(1, 1, N, arr[i]);
-			sum += seg.query(1, 1, N, 1, arr[i]-1);
+			fenwick.update(arr[i] , 1);
+			sum += fenwick.query(arr[i]-1);
 		}
-    	Arrays.fill(seg.tree, 0);
+    	Arrays.fill(fenwick.tree, 0);
     	for (int i = 1; i <= N; i++) {
     		arr[readInt()] = i;
 		}
     	for (int i = N; i > 0; i--) {
-    		seg.update(1, 1, N, arr[i]);
-			sum += seg.query(1, 1, N, 1, arr[i]-1);
+    		fenwick.update(arr[i] , 1);
+			sum += fenwick.query(arr[i]-1);
 		}
-
     	if((sum & 1) == 0) {
     		System.out.println("Possible");
     	} else {
     		System.out.println("Impossible");
     	}
     }
+    
     public static int readInt() throws Exception {
 		int val = 0;
 		boolean flag = false;
@@ -49,34 +49,26 @@ public class Main {
 	}
 }
 
-class SegTree {
-	public int[] tree;
-	SegTree(int n) {
-		double treeh = Math.ceil(Math.log(n) / Math.log(2)) + 1;
-		long treesize = Math.round(Math.pow(2, treeh));
-		tree = new int[Math.toIntExact(treesize)];
-	}
-
-	int query(int node, int start, int end, int left, int right) {
-		if (end < left || right < start)
-			return 0;
-		else if (left <= start && end <= right) {
-			return tree[node];
-		} else {
-			return query(node << 1, start, (start + end) >> 1, left, right)
-					+ query((node << 1) + 1, ((start + end) >> 1) + 1, end, left, right);
-		}
-	}
-
-	void update(int node, int start, int end, int index) {
-		if (index < start || end < index) {
-			return;
-		} else if (start == index && end == index) {
-			tree[node]++;
-		} else {
-			update(node << 1, start, (start + end) >> 1, index);
-			update((node << 1) + 1, ((start + end) >> 1) + 1, end, index);
-			tree[node] = tree[node << 1] + tree[(node << 1) + 1];
-		}
-	}
+class FenwickTree {
+    public int[] tree;
+    
+    public FenwickTree(int n) {
+        tree = new int[n + 1];
+    }
+    
+    public void update(int i, int val) {
+        while (i < tree.length) {
+            tree[i] += val;
+            i += i & -i;
+        }
+    }
+    
+    public int query(int i) {
+        int sum = 0;
+        while (i > 0) {
+            sum += tree[i];
+            i -= i & -i;
+        }
+        return sum;
+    }
 }
