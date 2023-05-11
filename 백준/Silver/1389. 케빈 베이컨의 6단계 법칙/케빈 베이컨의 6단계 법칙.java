@@ -1,13 +1,10 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.DataInputStream;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		FastIo io = new FastIo();
+		int N = io.nextInt();
+		int M = io.nextInt();
 
 		int[][] map = new int[N + 1][N + 1];
 		for (int i = 1; i <= N; i++) {
@@ -18,9 +15,8 @@ public class Main {
 		}
 
 		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
+			int a = io.nextInt();
+			int b = io.nextInt();
 			map[a][b] = 1;
 			map[b][a] = 1;
 		}
@@ -48,5 +44,57 @@ public class Main {
 			}
 		}
 		System.out.println(result);
+	}
+}
+
+
+
+class FastIo {
+	final private int BUFFER_SIZE = 1 << 16;
+	private DataInputStream din;
+	private byte[] buffer;
+	private int bufferPointer, bytesRead;
+
+	public FastIo() {
+		din = new DataInputStream(System.in);
+		buffer = new byte[BUFFER_SIZE];
+		bufferPointer = bytesRead = 0;
+	}
+	
+	public int nextInt() throws Exception {
+		int ret = 0;
+		byte c = read();
+		while (c <= ' ') {
+			c = read();
+		}
+		boolean neg = (c == '-');
+		if (neg)
+			c = read();
+		do {
+			ret = ret * 10 + c - '0';
+		} while ((c = read()) >= '0' && c <= '9');
+
+		if (neg)
+			return -ret;
+		return ret;
+	}
+
+	private void fillBuffer() throws Exception {
+		bytesRead = din.read(buffer, bufferPointer = 0,
+							BUFFER_SIZE);
+		if (bytesRead == -1)
+			buffer[0] = -1;
+	}
+
+	private byte read() throws Exception {
+		if (bufferPointer == bytesRead)
+			fillBuffer();
+		return buffer[bufferPointer++];
+	}
+
+	public void close() throws Exception {
+		if (din == null)
+			return;
+		din.close();
 	}
 }
