@@ -1,5 +1,5 @@
 public class Main {
-	public static long[][][][] dp;
+	public static int[][][][] dp;
 	public static void main(String[] args) throws Exception {
 		int N = readInt();
 		int a = readInt();
@@ -9,7 +9,7 @@ public class Main {
 			System.out.println(0);
 			return;
 		}
-		dp = new long[N + 1][a + 1][b + 1][c + 1];
+		dp = new int[N + 1][a + 1][b + 1][c + 1];
 		for (int i = 0; i <= N; i++)
 		for (int j = 0; j <= a; j++)
 		for (int k = 0; k <= b; k++)
@@ -36,15 +36,21 @@ public class Main {
 			return dp[n][a][b][c] = 0;
 		}
 		
-		long t = 0;
+		int t = 0;
 		t += dfs(n - 1, a - 1, b, c);
+		t %= 1000000007;
 		t += dfs(n - 1, a, b - 1, c);
+		t %= 1000000007;
 		t += dfs(n - 1, a, b, c - 1);
+		t %= 1000000007;
 		t += dfs(n - 1, a - 1, b - 1, c);
+		t %= 1000000007;
 		t += dfs(n - 1, a - 1, b, c - 1);
+		t %= 1000000007;
 		t += dfs(n - 1, a, b - 1, c - 1);
+		t %= 1000000007;
 		t += dfs(n - 1, a - 1, b - 1, c - 1);
-        t %= 1000000007;
+		t %= 1000000007;
 		return dp[n][a][b][c] = t; 
 	}
 
