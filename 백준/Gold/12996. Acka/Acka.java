@@ -28,15 +28,16 @@ public class Main {
 			return dp[n][a][b][c];
 		}
 		
-		dp[n][a][b][c] = 0;
-		dp[n][a][b][c] += dfs(n - 1, a - 1, b, c);
-		dp[n][a][b][c] += dfs(n - 1, a, b - 1, c);
-		dp[n][a][b][c] += dfs(n - 1, a, b, c - 1);
-		dp[n][a][b][c] += dfs(n - 1, a - 1, b - 1, c);
-		dp[n][a][b][c] += dfs(n - 1, a - 1, b, c - 1);
-		dp[n][a][b][c] += dfs(n - 1, a, b - 1, c - 1);
-		dp[n][a][b][c] += dfs(n - 1, a - 1, b - 1, c - 1);
-		return dp[n][a][b][c] %= 1000000007;
+		long t = 0;
+		t += dfs(n - 1, a - 1, b, c);
+		t += dfs(n - 1, a, b - 1, c);
+		t += dfs(n - 1, a, b, c - 1);
+		t += dfs(n - 1, a - 1, b - 1, c);
+		t += dfs(n - 1, a - 1, b, c - 1);
+		t += dfs(n - 1, a, b - 1, c - 1);
+		t += dfs(n - 1, a - 1, b - 1, c - 1);
+        t %= 1000000007;
+		return dp[n][a][b][c] = t; 
 	}
 
 	public static int readInt() throws Exception {
