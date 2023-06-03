@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
 	public static int[][][][] dp;
 	public static void main(String[] args) throws Exception {
@@ -10,11 +12,11 @@ public class Main {
 			return;
 		}
 		dp = new int[N + 1][a + 1][b + 1][c + 1];
-		for (int i = 0; i <= N; i++)
-		for (int j = 0; j <= a; j++)
-		for (int k = 0; k <= b; k++)
-		for (int l = 0; l <= c; l++)
-			dp[i][j][k][l] = -1;
+		for (int [][][] x : dp)
+		for (int [][] y : x)
+		for (int [] z : y)
+			Arrays.fill(z, -1);
+
 		dp[0][0][0][0] = 1;
 		System.out.println(dfs(N, a, b, c));
 	}
