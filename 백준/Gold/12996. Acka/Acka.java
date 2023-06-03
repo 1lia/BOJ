@@ -28,6 +28,14 @@ public class Main {
 			return dp[n][a][b][c];
 		}
 		
+		if(n < a || n < b || n < c) {
+			return dp[n][a][b][c] = 0;
+		}
+		
+		if(n > a + b + c) {
+			return dp[n][a][b][c] = 0;
+		}
+		
 		long t = 0;
 		t += dfs(n - 1, a - 1, b, c);
 		t += dfs(n - 1, a, b - 1, c);
