@@ -74,7 +74,7 @@ public class Main {
 }
 
 class Trie{
-    private int[][] trie = new int[2500000][2];
+    private int[][] trie = new int[1800000][2];
     private int piv;
     public long size;
     public void insert(long n){
