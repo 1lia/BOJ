@@ -26,6 +26,9 @@ public class Main {
 		}
 		
 		int result = numcnt;
+		if(count[c] == 0)
+			result++;
+		
 		
 		for (int i = 1; i < N; i++) {
 			count[arr[i-1]]--;
