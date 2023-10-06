@@ -1,10 +1,10 @@
 # [level 4] 도둑질 - 42897 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42897?language=python3) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42897?language=java) 
 
 ### 성능 요약
 
-메모리: 183 MB, 시간: 1200.06 ms
+메모리: 102 MB, 시간: 22.83 ms
 
 ### 구분
 
