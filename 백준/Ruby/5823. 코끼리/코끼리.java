@@ -25,7 +25,12 @@ public class Main {
 
         for (int i = 0; i < N; i++) {
             arr[i] = readLong();
-            map.put(arr[i], 1);
+            if(map.containsKey(arr[i])) {
+            	map.put(arr[i], map.get(arr[i]) + 1);
+            } else {
+            	map.put(arr[i], 1);
+            }
+            
             if(arr[i] <= size) {
             	not[(int) (arr[i] / div)].add(arr[i] % div);
             } else {
@@ -80,7 +85,7 @@ public class Main {
     	}
         
         //이전점이 없거나 커버불가능한 점이면 지금점을 시작점으로 만듬
-        if(before == null || before + L < v) {
+        if(before == null || quotient * div + before + L < v) {
         	res++;
         	yes[finquotient].add(finremainder);
         	YesToNot(v , v + L);
