@@ -1,9 +1,6 @@
-import java.io.*;
-
 public class Main {
 	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
+		int N = readInt();
 		int cnt = 0;
 		StringBuilder t = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
@@ -14,11 +11,11 @@ public class Main {
 		for (int i = 1; i <= N; i++) {
 			t.setLength(0);
 			System.out.println(t.append("? 1 ").append(i));	
-			A[i] = Integer.parseInt(br.readLine());
+			A[i] = readInt();
 
 			t.setLength(0);
 			System.out.println(t.append("? ").append(i).append(" ").append(N));	
-			B[i] = Integer.parseInt(br.readLine());
+			B[i] = readInt();
 		}	
 		
 		for (int i = 1; i <= N; i++) {
@@ -28,5 +25,23 @@ public class Main {
 			}
 		}
 		System.out.println(res.append("! ").append(cnt).append(sb));
+	}
+	
+	public static int readInt() throws Exception {
+		int val = 0;
+		int c = System.in.read();
+		while (c <= ' ') {
+			c = System.in.read();
+		}
+		boolean flag = (c == '-');
+		if (flag)
+			c = System.in.read();
+		do {
+			val = 10 * val + c - 48;
+		} while ((c = System.in.read()) >= 48 && c <= 57);
+
+		if (flag)
+			return -val;
+		return val;
 	}
 }
