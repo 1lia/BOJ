@@ -82,10 +82,6 @@ public class Main {
 		b = find(b);
 		if (a == b) 
 			return;
-		
-	    if (size(a) > size(b)) {
-	    	int t = a; a = b; b = t;
-	    }
 	    
 	    p[b] += p[a];
 	    p[a] = b;
