@@ -23,7 +23,7 @@ public class Main {
 			int b = readInt();
 			boolean flag = false;
 			int color = 0;
-			for (int j = 0; j < 40; j++) {
+			for (int j = 0; j < 20; j++) {
 				int t = rand(a,b);
 				int cnt = upper(a , b , t) - lower(a , b , t) + 1;
 				if(cnt > ((b - a + 1) >> 1)) {
