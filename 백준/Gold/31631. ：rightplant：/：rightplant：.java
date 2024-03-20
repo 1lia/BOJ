@@ -3,24 +3,23 @@ public class Main {
 		StringBuilder sb =  new StringBuilder();
 		int N = readInt();
 		int[] arr = new int[N + 1];
-		arr[1] = 1;
-		arr[2] = 2;
-		for (int i = 3; i <= N; i++) {
-			int t = ((i - 1) >> 1) + 1;
-			if(i % 4 == 0) {
-				t++;
+		int s = 1;
+		int e = N;
+		int l = 0;
+		int r = 0;
+
+		while(N > 0) {
+			if(l >= r) {
+				arr[e--] = N;
+				r += N;
+			} else {
+				arr[s++] = N;
+				l += N;
 			}
-			for (int j = i; j > t; j--) {
-				arr[j] = arr[j-1] + 1;
-			}
-			arr[t] = 1;
-			for (int j = t - 1; j > 0; j--) {
-				arr[j]++;
-			}
+			N--;
 		}
 		
-		for (int i = 1; i
-				<= N; i++) {
+		for (int i = 1; i < arr.length; i++) {
 			sb.append(arr[i]).append(' ');
 		}
 		System.out.println(sb);
