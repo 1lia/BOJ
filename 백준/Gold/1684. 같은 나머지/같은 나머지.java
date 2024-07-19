@@ -10,7 +10,7 @@ public class Main {
         Arrays.sort(arr);
         int res = 0;
         for (int i = 1; i < N; i++) {
-            int t = arr[i] - arr[i - 1];
+            int t = arr[i] - arr[0];
             res = gcd(res , t);
         }
         System.out.println(res);
